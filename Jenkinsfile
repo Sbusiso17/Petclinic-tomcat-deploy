@@ -4,15 +4,24 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/writetoritika/Petclinic.git'
+                echo "checking out at our code"
+                git branch: 'main', url: 'https://github.com/Sbusiso17/Petclinic-tomcat-deploy.git'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "running test on maven build"
+               sh "mvn clean test"
             }
         }
      stage('Build') {
             steps {
+                echo "packaging the project into a .war file"
                sh "mvn clean install"
             }
         }
     stage('Deploy') {
+             echo "Deploying the .war file into a tomcat prod server"
             steps {
             sshagent(['tomcat-pipeline']) {
                   sh "scp -o StrictHostKeyChecking=no target/petclinic.war tomcat@3.83.107.27/:/opt/tomcat/webapps "
