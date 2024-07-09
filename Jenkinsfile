@@ -21,8 +21,8 @@ pipeline {
             }
         }
     stage('Deploy') {
-             echo "Deploying the .war file into a tomcat prod server"
             steps {
+                 echo "Deploying the .war file into a tomcat prod server"
             sshagent(['tomcat-pipeline']) {
                   sh "scp -o StrictHostKeyChecking=no target/petclinic.war tomcat@3.83.107.27/:/opt/tomcat/webapps "
                }
