@@ -34,9 +34,6 @@ pipeline {
         }
         stage('Approval') {
             steps {
-<<<<<<< HEAD
-            
-=======
                 script {
                     def userInput = input(id: 'Proceed1', message: 'Deploy to production?', parameters: [
                         [$class: 'BooleanParameterDefinition', defaultValue: true, description: 'Check to proceed with deployment', name: 'Please confirm deployment']
@@ -56,7 +53,6 @@ pipeline {
                 sshagent(['tomcat-pipeline']) {
                     sh "scp -o StrictHostKeyChecking=no target/petclinic.war tomcat@54.152.252.127:/opt/tomcat/webapps "
                 }
->>>>>>> adb98aa (adding the aproval stage to our pipeline)
             }
         }    
     }
