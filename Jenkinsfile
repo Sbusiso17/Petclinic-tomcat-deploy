@@ -1,10 +1,12 @@
-@library('jenkins-lib')
+@Library('jenkins-lib') _
 pipeline {
     agent any
 
     stages {
         stage('Git Checkout') {
-           gitCheckout()
+            steps {
+                gitCheckout()
+            }
         }
         stage('Compile') {
             steps {
