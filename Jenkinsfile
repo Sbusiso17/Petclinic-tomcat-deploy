@@ -35,14 +35,23 @@ pipeline {
         stage('Approval') {
             steps {
                 script {
-                    def userInput = input(id: 'Proceed1', message: 'Deploy to production?', parameters: [
-                        [$class: 'BooleanParameterDefinition', defaultValue: true, description: 'Check to proceed with deployment', name: 'Please confirm deployment']
-                    ])
+                    def adminName = "Sbongokuhle"  
                     
-                    if(userInput == true) {
-                        echo "User approved the deployment"
+                    def userInput = input(
+                        id: 'Proceed1', 
+                        message: 'Deploy to production?', 
+                        parameters: [
+                            string(defaultValue: '', description: 'Enter admin name for approval', name: 'ADMIN_NAME'),
+                            booleanParam(defaultValue: true, description: 'Check to proceed with deployment', name: 'APPROVE_DEPLOYMENT')
+                        ]
+                    )
+                    
+                    if (userInput.ADMIN_NAME == adminName && userInput.APPROVE_DEPLOYMENT) {
+                        echo "Deployment approved by admin: ${userInput.ADMIN_NAME}"
+                    } else if (userInput.ADMIN_NAME != adminName) {
+                        error "Deployment rejected. Invalid admin name provided."
                     } else {
-                        error "User aborted the deployment"
+                        error "Deployment aborted by user."
                     }
                 }
             }
