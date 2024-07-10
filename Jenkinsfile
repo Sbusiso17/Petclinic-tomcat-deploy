@@ -8,16 +8,6 @@ pipeline {
                 gitCheckout()
             }
         }
-        stage('Compile') {
-            steps {
-               mvnCompile() 
-            }
-        }
-        stage('Validate') {
-            steps {
-               mvnValidate()
-            }
-        }
         stage('Test') {
             steps {
                mvnTest()
