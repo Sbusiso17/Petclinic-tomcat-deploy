@@ -10,26 +10,22 @@ pipeline {
         }
         stage('Compile') {
             steps {
-                echo "compiling our code"
-                sh "mvn clean compile"
+               mvnCompile() 
             }
         }
         stage('Validate') {
             steps {
-                echo "running validation on maven build"
-                sh "mvn clean validate"
+               mvnValidate()
             }
         }
         stage('Test') {
             steps {
-                echo "running test on maven build"
-                sh "mvn clean test"
+               mvnTest()
             }
         }
         stage('Build') {
             steps {
-                echo "packaging the project into a .war file"
-                sh "mvn clean install"
+               mvnBuild()
             }
         }
         stage('Approval') {
